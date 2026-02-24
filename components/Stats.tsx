@@ -37,7 +37,7 @@ function Counter({ target }: { target: number }) {
 
 export default function Stats() {
   return (
-    <section className="py-28 px-6 md:px-20">
+    <section className="py-0 px-2 md:px-20">
       <div className="max-w-6xl mx-auto">
 
         {/* Glass Container */}

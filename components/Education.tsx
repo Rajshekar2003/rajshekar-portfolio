@@ -48,10 +48,21 @@ export default function Education() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-20 tracking-tight"
+          className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
         >
           Education
         </motion.h2>
+
+        {/* Subtle Academic Focus Line */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-gray-400 text-sm mb-20 max-w-2xl"
+        >
+          Focused on data structures, scalable system design, and practical real-world implementation.
+        </motion.p>
 
         {/* Timeline */}
         <div ref={ref} className="relative">
@@ -111,7 +122,7 @@ export default function Education() {
                   {item.institution}
                 </p>
 
-                <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
+                <p className="text-gray-400 text-sm leading-relaxed max-w-2xl">
                   {item.description}
                 </p>
               </motion.div>

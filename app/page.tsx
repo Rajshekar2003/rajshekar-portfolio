@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import Reveal from "../components/Reveal";
 import SectionBackground from "../components/SectionBackground";
 import TechGrid from "../components/TechGrid";
+import ParallaxSection from "../components/ParallaxSection";
 
 export default function Home() {
   return (
@@ -20,93 +21,107 @@ export default function Home() {
       <Hero />
 
       {/* ABOUT */}
-      <section
-        id="about"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <About />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={30}>
+        <section
+          id="about"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <SectionBackground />
+          <Reveal>
+            <About />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* STATS */}
-      <section
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <Stats />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={20}>
+        <section className="relative section-spacing section-divider overflow-hidden">
+          <SectionBackground />
+          <Reveal>
+            <Stats />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
-      {/* SKILLS (WITH GRID) */}
-      <section
-        id="skills"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <TechGrid />
-        <SectionBackground />
-        <Reveal>
-          <Skills />
-        </Reveal>
-      </section>
+      {/* SKILLS */}
+      <ParallaxSection speed={35}>
+        <section
+          id="skills"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <TechGrid />
+          <SectionBackground />
+          <Reveal>
+            <Skills />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
-      {/* EDUCATION (WITH GRID) */}
-      <section
-        id="education"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <TechGrid />
-        <SectionBackground />
-        <Reveal>
-          <Education />
-        </Reveal>
-      </section>
+      {/* EDUCATION */}
+      <ParallaxSection speed={25}>
+        <section
+          id="education"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <TechGrid />
+          <SectionBackground />
+          <Reveal>
+            <Education />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* EXPERIENCE */}
-      <section
-        id="experience"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <Experience />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={28}>
+        <section
+          id="experience"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <SectionBackground />
+          <Reveal>
+            <Experience />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* PROJECTS */}
-      <section
-        id="projects"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <Projects />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={35}>
+        <section
+          id="projects"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <SectionBackground />
+          <Reveal>
+            <Projects />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* CERTIFICATIONS */}
-      <section
-        id="certifications"
-        className="relative section-spacing section-divider overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <Certifications />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={32}>
+        <section
+          id="certifications"
+          className="relative section-spacing section-divider overflow-hidden"
+        >
+          <SectionBackground />
+          <Reveal>
+            <Certifications />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* CONTACT */}
-      <section
-        id="contact"
-        className="relative section-spacing overflow-hidden"
-      >
-        <SectionBackground />
-        <Reveal>
-          <Contact />
-        </Reveal>
-      </section>
+      <ParallaxSection speed={18}>
+        <section
+          id="contact"
+          className="relative section-spacing overflow-hidden"
+        >
+          <SectionBackground />
+          <Reveal>
+            <Contact />
+          </Reveal>
+        </section>
+      </ParallaxSection>
 
       {/* FOOTER */}
       <Footer />

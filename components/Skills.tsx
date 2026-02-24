@@ -57,7 +57,7 @@ export default function Skills() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   return (
-    <section id="skills" className="relative min-h-screen px-6 md:px-20 py-32">
+    <section id="skills" className="relative  px-6 md:px-20 py-32">
       <div className="max-w-6xl mx-auto">
 
         <Reveal>
@@ -76,7 +76,7 @@ export default function Skills() {
               transition: { staggerChildren: 0.12 },
             },
           }}
-          className="grid md:grid-cols-2 gap-x-20 gap-y-20"
+          className="grid md:grid-cols-2 gap-x-12 gap-y-12"
         >
           {skills.map((category, index) => (
             <motion.div
