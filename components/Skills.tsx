@@ -57,13 +57,18 @@ export default function Skills() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   return (
-    <section id="skills" className="relative  px-6 md:px-20 py-32">
+    <section id="skills" className="relative px-6 md:px-20 py-32">
       <div className="max-w-6xl mx-auto">
 
         <Reveal>
-          <h2 className="text-4xl md:text-5xl font-bold mb-24 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
             Technical Expertise
           </h2>
+
+          {/* Professional Line Added */}
+          <p className="text-gray-400 max-w-2xl mb-24 leading-relaxed">
+            Core technologies and engineering principles applied to build scalable, maintainable, and performance-driven systems.
+          </p>
         </Reveal>
 
         <motion.div

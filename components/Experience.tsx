@@ -49,10 +49,21 @@ export default function Experience() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-bold mb-20"
+        className="text-4xl md:text-5xl font-bold mb-6"
       >
-        Experience
+        Professional Journey
       </motion.h2>
+
+      {/* Professional Line Added */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="text-gray-400 max-w-2xl mb-20 leading-relaxed"
+      >
+        Practical experience shaped by ownership, execution, and continuous improvement.
+      </motion.p>
 
       <div className="relative">
 

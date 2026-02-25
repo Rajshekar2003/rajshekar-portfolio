@@ -12,7 +12,7 @@ export default function About() {
           {/* Section Header */}
           <div className="mb-24">
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-white">
-              About
+              Profile
             </h2>
             <div className="h-[1px] w-[60px] bg-white/40 mt-4" />
           </div>

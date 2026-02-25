@@ -9,8 +9,7 @@ const projects = [
     description:
       "Habit tracking web application that allows users to create daily habits, mark completion, and visualize weekly and monthly performance through interactive graphs.",
     tech: ["Next.js", "Node.js", "MongoDB", "Chart.js"],
-    image:
-      "/img_1.jpeg", // productivity / planning image
+    image: "/img_1.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -18,8 +17,7 @@ const projects = [
     description:
       "Responsive full-stack marketplace with authentication, cart management, and secure order handling built with structured backend architecture.",
     tech: ["Next.js", "Node.js", "MySQL"],
-    image:
-      "/img_2.jpeg",
+    image: "/img_2.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -27,8 +25,7 @@ const projects = [
     description:
       "Student marketplace platform with optimized frontend performance and scalable backend integration.",
     tech: ["React", "Firebase", "Tailwind"],
-    image:
-      "/img_3.jpeg",
+    image: "/img_3.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -36,8 +33,7 @@ const projects = [
     description:
       "Research-driven project applying quantum computing principles for advanced medical data classification.",
     tech: ["Python", "Quantum Computing"],
-    image:
-      "/img_4.jpeg",
+    image: "/img_4.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -45,8 +41,7 @@ const projects = [
     description:
       "Machine learning classification model using KNN algorithm to identify bird species from structured dataset features.",
     tech: ["Python", "KNN", "Machine Learning"],
-    image:
-       "/img_5.jpeg", // FIXED working bird image
+    image: "/img_5.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -54,8 +49,7 @@ const projects = [
     description:
       "Real-time iris detection system using MediaPipe and computer vision techniques for precise eye tracking.",
     tech: ["Python", "MediaPipe", "Computer Vision"],
-    image:
-      "/img_6.jpeg",
+    image: "/img_6.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -63,8 +57,7 @@ const projects = [
     description:
       "Web application recommending travel destinations based on user preferences using structured backend logic.",
     tech: ["Python", "Web Development"],
-    image:
-      "/img_7.jpeg",
+    image: "/img_7.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
 ];
@@ -75,9 +68,14 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto">
 
         <Reveal>
-          <h2 className="text-4xl md:text-5xl font-bold mb-20 tracking-tight">
-            Selected Work
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+            Selected Projects
           </h2>
+
+          {/* Professional Line Added */}
+          <p className="text-gray-400 max-w-2xl mb-20 leading-relaxed">
+            A collection of production-oriented and research-driven projects focused on performance, scalability, and practical problem-solving.
+          </p>
         </Reveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">

@@ -49,7 +49,7 @@ export default function Certifications() {
 
         <Reveal>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            Certifications
+            Certifications & Learning
           </h2>
 
           <p className="text-gray-400 max-w-2xl mb-16 leading-relaxed">

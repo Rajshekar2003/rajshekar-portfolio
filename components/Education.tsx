@@ -50,7 +50,7 @@ export default function Education() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold mb-6 tracking-tight"
         >
-          Education
+          Academic Foundation
         </motion.h2>
 
         {/* Subtle Academic Focus Line */}
