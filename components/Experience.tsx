@@ -5,21 +5,21 @@ import { useRef } from "react";
 
 const experienceData = [
   {
-    year: "2024",
+    year: "2025",
     role: "Full Stack Developer",
     company: "Independent / Academic Projects",
     description:
       "Built scalable full-stack applications using Next.js, React, Flask and MySQL with strong backend structure and performance optimization.",
   },
   {
-    year: "2023",
+    year: "2024",
     role: "Machine Learning Developer",
     company: "Academic Research",
     description:
       "Developed ML-based medical detection system using Python and Flask. Optimized model performance and integrated backend APIs.",
   },
   {
-    year: "2022",
+    year: "2023",
     role: "Frontend Developer",
     company: "Project Based Work",
     description:

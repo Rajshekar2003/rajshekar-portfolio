@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 import Navbar from "../components/Navbar";
-import ScrollProgress from "../components/ScrollProgress";
 import PageTransition from "../components/PageTransition";
 import Preloader from "../components/Preloader";
 import SmoothScroll from "../components/SmoothScroll";
@@ -42,7 +41,7 @@ export default function RootLayout({
         />
 
         {/* Scroll Progress Bar */}
-        <ScrollProgress />
+       
 
         {/* Navbar */}
         <Navbar />

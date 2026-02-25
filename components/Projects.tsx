@@ -10,7 +10,7 @@ const projects = [
       "Habit tracking web application that allows users to create daily habits, mark completion, and visualize weekly and monthly performance through interactive graphs.",
     tech: ["Next.js", "Node.js", "MongoDB", "Chart.js"],
     image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c", // productivity / planning image
+      "/img_1.jpeg", // productivity / planning image
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -19,7 +19,7 @@ const projects = [
       "Responsive full-stack marketplace with authentication, cart management, and secure order handling built with structured backend architecture.",
     tech: ["Next.js", "Node.js", "MySQL"],
     image:
-      "https://images.unsplash.com/photo-1557821552-17105176677c",
+      "/img_2.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -28,7 +28,7 @@ const projects = [
       "Student marketplace platform with optimized frontend performance and scalable backend integration.",
     tech: ["React", "Firebase", "Tailwind"],
     image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+      "/img_3.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -37,7 +37,7 @@ const projects = [
       "Research-driven project applying quantum computing principles for advanced medical data classification.",
     tech: ["Python", "Quantum Computing"],
     image:
-      "https://images.unsplash.com/photo-1581595219315-a187dd40c322",
+      "/img_4.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -46,7 +46,7 @@ const projects = [
       "Machine learning classification model using KNN algorithm to identify bird species from structured dataset features.",
     tech: ["Python", "KNN", "Machine Learning"],
     image:
-       "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=1200&q=80", // FIXED working bird image
+       "/img_5.jpeg", // FIXED working bird image
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -55,7 +55,7 @@ const projects = [
       "Real-time iris detection system using MediaPipe and computer vision techniques for precise eye tracking.",
     tech: ["Python", "MediaPipe", "Computer Vision"],
     image:
-      "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b",
+      "/img_6.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
   {
@@ -64,7 +64,7 @@ const projects = [
       "Web application recommending travel destinations based on user preferences using structured backend logic.",
     tech: ["Python", "Web Development"],
     image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "/img_7.jpeg",
     link: "https://github.com/Rajshekar2003",
   },
 ];

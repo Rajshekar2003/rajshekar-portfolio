@@ -41,11 +41,11 @@ export default function Footer() {
               icon={<FaGithub />}
             />
             <SocialIcon
-              href="https://linkedin.com/in/your-link"
+              href="https://www.linkedin.com/in/rajshekarrc"
               icon={<FaLinkedin />}
             />
             <SocialIcon
-              href="https://instagram.com/your-link"
+              href="https://www.instagram.com/mr.______.roy?igsh=a3U2YWRrbG13anpk&utm_source=qr"
               icon={<FaInstagram />}
             />
           </motion.div>

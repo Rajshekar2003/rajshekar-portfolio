@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import { useEffect, useState } from "react";
 import MagneticButton from "./MagneticButton";
-import { Github, Linkedin, Download } from "lucide-react";
+import { Github, Linkedin, Download, Mail } from "lucide-react";
 
 export default function Hero() {
   const name = "Rajshekar RC";
@@ -130,21 +130,19 @@ export default function Hero() {
           and modern user experiences.
         </motion.p>
 
-        {/* Buttons (Structured Order) */}
+        {/* Buttons */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           className="mt-12 flex gap-6 flex-wrap justify-center"
         >
-          {/* 1️⃣ Contact Me */}
           <a href="#contact">
             <MagneticButton className="px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
               Contact Me
             </MagneticButton>
           </a>
 
-          {/* 2️⃣ Resume */}
           <a href="/Rajshekar_RC_Resume.pdf" download>
             <MagneticButton className="flex items-center gap-2 px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
               <Download size={18} />
@@ -152,7 +150,6 @@ export default function Hero() {
             </MagneticButton>
           </a>
 
-          {/* 3️⃣ View Work */}
           <a href="#projects">
             <MagneticButton className="px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
               View Work
@@ -163,7 +160,7 @@ export default function Hero() {
         {/* Social Links */}
         <div className="mt-8 flex gap-6">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/Rajshekar2003"
             target="_blank"
             className="flex items-center gap-2 text-gray-400 hover:text-white transition"
           >
@@ -172,17 +169,28 @@ export default function Hero() {
           </a>
 
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://www.linkedin.com/in/rajshekarrc"
             target="_blank"
             className="flex items-center gap-2 text-gray-400 hover:text-white transition"
           >
             <Linkedin size={18} />
             LinkedIn
           </a>
+
+          {/* NEW EMAIL */}
+          <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=rajshekar.r.c2003@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center gap-2 text-gray-400 hover:text-white transition"
+>
+  <Mail size={18} />
+  Email
+</a>
         </div>
       </motion.div>
 
-      {/* Premium Scroll Mouse */}
+      {/* Scroll Mouse */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -191,15 +199,8 @@ export default function Hero() {
       >
         <div className="w-6 h-10 border border-white/30 rounded-full flex justify-center relative">
           <motion.div
-            animate={{
-              y: [2, 14, 2],
-              opacity: [1, 0.3, 1],
-            }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ y: [2, 14, 2], opacity: [1, 0.3, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity }}
             className="w-1.5 h-1.5 bg-white rounded-full mt-2"
           />
         </div>
