@@ -143,7 +143,7 @@ export default function Hero() {
             </MagneticButton>
           </a>
 
-          <a href="/Rajshekar_Resume.pdf" download>
+          <a href="/Rajshekar_RC_Resume.pdf" download>
             <MagneticButton className="flex items-center gap-2 px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
               <Download size={18} />
               Resume
