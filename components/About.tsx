@@ -1,89 +1,181 @@
 "use client";
 
-import Reveal from "./Reveal";
+import { Fragment, useEffect, useRef } from "react";
+import Image from "next/image";
+
+// Each word renders as <span>{word}</span>{" "} — space is a sibling text node
+// OUTSIDE the span so display:inline-block cannot collapse it.
+function W({ t, s }: { t: string; s: number }) {
+  return (
+    <>
+      {t
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((word, i) => (
+          <Fragment key={s + i}>
+            <span
+              className="reveal-word"
+              style={{ transitionDelay: `${(s + i) * 25}ms` }}
+            >
+              {word}
+            </span>
+            {" "}
+          </Fragment>
+        ))}
+    </>
+  );
+}
+
+const META: [string, string][] = [
+  ["Based in",  "Bangalore, India"],
+  ["From",      "Shikaripura, Shimoga"],
+  ["Focus",     "Full-stack · AI Engineering · GenAI"],
+  ["Stack",     "React · Next.js · Python · LLMs"],
+  ["Languages", "English · Kannada · Hindi"],
+  ["Available", "2026 — open to engineering work"],
+];
 
 export default function About() {
+  const textRef     = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const innerRef    = useRef<HTMLDivElement>(null);
+
+  // Word-by-word reveal on scroll into view
+  useEffect(() => {
+    const container = textRef.current;
+    if (!container) return;
+
+    const paragraphs = container.querySelectorAll<HTMLElement>(".about-text p");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target
+            .querySelectorAll<HTMLElement>(".reveal-word")
+            .forEach((el) => el.classList.add("visible"));
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    paragraphs.forEach((p) => observer.observe(p));
+    return () => observer.disconnect();
+  }, []);
+
+  // Portrait parallax — max ±8px, scale 1.04 on hover; inset:0 default keeps image centred
+  useEffect(() => {
+    const portrait = portraitRef.current;
+    const inner    = innerRef.current;
+    if (!portrait || !inner) return;
+
+    function onMove(e: MouseEvent) {
+      const r  = portrait!.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width  - 0.5;
+      const py = (e.clientY - r.top)  / r.height - 0.5;
+      inner!.style.transform = `translate(${px * -8}px, ${py * -8}px) scale(1.04)`;
+    }
+    function onLeave() {
+      inner!.style.transform = "translate(0, 0) scale(1)";
+    }
+
+    portrait.addEventListener("mousemove", onMove);
+    portrait.addEventListener("mouseleave", onLeave);
+    return () => {
+      portrait.removeEventListener("mousemove", onMove);
+      portrait.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
   return (
-    <section className="min-h-screen px-6 md:px-20 py-24">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="about-section">
 
-        <Reveal>
+      {/* ── Section header — untouched ── */}
+      <div className="section-header">
+        <div className="section-label">
+          <span className="num">01</span>— About
+        </div>
+        <h2 className="section-title">
+          A quiet obsession<br />
+          with <em>how things</em><br />
+          are made.
+        </h2>
+      </div>
 
-          {/* Section Header */}
-          <div className="mb-24">
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-white">
-              Profile
-            </h2>
-            <div className="h-[1px] w-[60px] bg-white/40 mt-4" />
+      {/* ── Two-column body ── */}
+      <div className="about-inner" ref={textRef}>
+
+        {/* LEFT — sticky portrait */}
+        <div className="about-sticky">
+          <div className="about-portrait" ref={portraitRef}>
+            <div className="about-portrait-inner" ref={innerRef}>
+              <Image
+                src="/my_img.jpeg"
+                alt="Rajshekar RC portrait"
+                fill
+                unoptimized
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 900px) 100vw, 45vw"
+              />
+            </div>
+          </div>
+          <div className="about-portrait-caption">
+            <span>Bangalore</span>
+            <span>2026</span>
+          </div>
+        </div>
+
+        {/* RIGHT — bio text */}
+        <div className="about-text">
+
+          {/* P1 — "Born in Shikaripura, raised between…" */}
+          <p>
+            <W t="Born in" s={0} />
+            <em><W t="Shikaripura," s={2} /></em>
+            {" "}
+            <W t="raised between Shimoga and Davanagere, building in Bangalore." s={3} />
+          </p>
+
+          {/* P2 — "I'm an engineer…" */}
+          <p>
+            <W t="I'm an engineer who builds things" s={0} />
+            <em><W t="end to end" s={6} /></em>
+            <W t="— production AI systems, RAG pipelines, full-stack web applications. The kind of work where the screenshot and the source code agree with each other." s={9} />
+          </p>
+
+          {/* P3 — "Computer Science was the degree…" */}
+          <p>
+            <W t="Computer Science was the degree." s={0} />
+            {" "}
+            <em><W t="Shipping" s={5} /></em>
+            {" "}
+            <W t="was the education." s={6} />
+            {" "}
+            <span className="dim">
+              <W t="Every project taught me something the syllabus didn't — how to pick the right model, how to design a clean API, how to know when something is actually finished." s={9} />
+            </span>
+          </p>
+
+          {/* P4 — "Today I work across the stack…" */}
+          <p>
+            <W t="Today I work across the stack:" s={0} />
+            {" "}
+            <em><W t="React, Next.js, Python." s={6} /></em>
+            {" "}
+            <W t="I build with LLMs, vector databases, and computer vision. The tools change. The standard doesn't." s={9} />
+          </p>
+
+          {/* Meta table */}
+          <div className="about-meta">
+            {META.map(([k, v], i) => (
+              <Fragment key={i}>
+                <span className="k">{k}</span>
+                <span className="v">{v}</span>
+              </Fragment>
+            ))}
           </div>
 
-          {/* Main Layout */}
-          <div className="grid md:grid-cols-[380px_1fr] gap-16 items-center">
-
-            {/* LEFT — IMAGE */}
-            <div className="relative flex justify-center md:justify-start">
-
-              {/* Subtle vertical accent line */}
-              <div className="absolute -left-8 top-0 h-full w-[1px] bg-white/10 hidden md:block" />
-
-              <div className="w-full max-w-[340px] h-[470px] overflow-hidden rounded-2xl border border-white/10">
-
-                {/* Replace src with your actual image path */}
-                <img
-                  src="/my_img.jpeg"
-                  alt="Rajshekar"
-                  className="w-full h-full object-cover transition duration-700 ease-out"
-                />
-
-              </div>
-
-              {/* Minimal caption */}
-              <p className="absolute -bottom-8 text-xs text-gray-500 tracking-wide">
-                Bangalore · 2026
-              </p>
-
-            </div>
-
-            {/* RIGHT — CONTENT */}
-            <div className="space-y-10">
-
-              {/* Main Bio */}
-              <div className="space-y-6">
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  I’m a Computer Science graduate who values clarity, discipline,
-                  and steady growth. My journey into technology began with curiosity,
-                  but what keeps me here is the satisfaction of building things that
-                  work — reliably and thoughtfully.
-                </p>
-
-                <p className="text-gray-500 leading-relaxed">
-                  I care about doing things the right way — understanding problems
-                  deeply, writing clean and maintainable solutions, and improving
-                  consistently over time. Whether working independently or in a team,
-                  I focus on responsibility, learning, and long-term thinking.
-                </p>
-              </div>
-
-              {/* Philosophy Line */}
-              <div className="pt-8 border-t border-white/10">
-                <p className="text-white text-xl font-medium tracking-tight">
-                  Consistency over noise.
-                </p>
-
-                {/* Subtle 3-Column Philosophy Row */}
-                <div className="mt-6 grid grid-cols-3 text-xs text-gray-500 tracking-wide">
-                  <span>Clarity</span>
-                  <span className="text-center">Discipline</span>
-                  <span className="text-right">Long-term Thinking</span>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </Reveal>
-
+        </div>
       </div>
     </section>
   );

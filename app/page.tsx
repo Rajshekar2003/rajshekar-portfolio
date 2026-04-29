@@ -4,6 +4,7 @@ import Stats from "../components/Stats";
 import Skills from "../components/Skills";
 import Education from "../components/Education";
 import Experience from "../components/Experience";
+import Marquee from "../components/Marquee";
 import Projects from "../components/Projects";
 import Certifications from "../components/Certifications";
 import Contact from "../components/Contact";
@@ -84,6 +85,9 @@ export default function Home() {
         </section>
       </ParallaxSection>
 
+      {/* MARQUEE — full-bleed interlude between Experience and Projects */}
+      <Marquee />
+
       {/* PROJECTS */}
       <ParallaxSection speed={35}>
         <section
@@ -97,31 +101,11 @@ export default function Home() {
         </section>
       </ParallaxSection>
 
-      {/* CERTIFICATIONS */}
-      <ParallaxSection speed={32}>
-        <section
-          id="certifications"
-          className="relative section-spacing section-divider overflow-hidden"
-        >
-          <SectionBackground />
-          <Reveal>
-            <Certifications />
-          </Reveal>
-        </section>
-      </ParallaxSection>
+      {/* CERTIFICATIONS — light panel, breaks the dark pattern */}
+      <Certifications />
 
       {/* CONTACT */}
-      <ParallaxSection speed={18}>
-        <section
-          id="contact"
-          className="relative section-spacing overflow-hidden"
-        >
-          <SectionBackground />
-          <Reveal>
-            <Contact />
-          </Reveal>
-        </section>
-      </ParallaxSection>
+      <Contact />
 
       {/* FOOTER */}
       <Footer />

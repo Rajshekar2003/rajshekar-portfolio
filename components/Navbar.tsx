@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 const sections = [
   { id: "about", label: "About" },
@@ -13,21 +12,20 @@ const sections = [
   { id: "contact", label: "Contact" },
 ];
 
+function getIST(): string {
+  return new Date().toLocaleTimeString("en-GB", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
 export default function Navbar() {
   const [active, setActive] = useState("about");
-  const [scrolled, setScrolled] = useState(false);
+  const [time, setTime] = useState("BLR · --:--");
 
-  /* Smooth background change */
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  /* Active section detection */
+  // Active section detection — preserved from original
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -52,86 +50,50 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  // Live IST time — only set after mount to avoid SSR hydration mismatch
+  useEffect(() => {
+    setTime(`BLR · ${getIST()}`);
+    const id = setInterval(() => setTime(`BLR · ${getIST()}`), 30000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <nav
-      className={`
-        fixed top-0 w-full z-50 transition-all duration-500
-        ${
-          scrolled
-            ? "backdrop-blur-2xl bg-black/60 border-b border-white/10"
-            : ""
-        }
-      `}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+    <>
+      <nav className="nb-nav">
+        <div className="nb-grid">
 
-        {/* Logo */}
-        <a
-          href="#home"
-          className="text-lg font-semibold tracking-wide hover:opacity-70 transition"
-        >
-          Rajshekar
-        </a>
+          {/* Left — Brand */}
+          <a href="#home" className="nb-brand">
+            Rajshekar<em>·</em>RC
+          </a>
 
-        {/* Premium Glass Nav */}
-        <div className="hidden md:flex relative items-center">
-
-          <div className="flex gap-2 p-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 relative">
-
-            {sections.map((item) => {
-              const isActive = active === item.id;
-
-              return (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className="relative px-5 py-2 rounded-full group"
-                >
-                  {/* Glow Layer */}
-                  {isActive && (
-                    <>
-                      <motion.div
-                        layoutId="navbar-glow"
-                        className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl"
-                        transition={{
-                          type: "spring",
-                          stiffness: 450,
-                          damping: 35,
-                        }}
-                      />
-
-                      {/* Main Sliding Pill */}
-                      <motion.div
-                        layoutId="navbar-pill"
-                        className="absolute inset-0 rounded-full bg-white/10 border border-white/20"
-                        transition={{
-                          type: "spring",
-                          stiffness: 450,
-                          damping: 35,
-                        }}
-                      />
-                    </>
-                  )}
-
-                  <span
-                    className={`
-                      relative z-10 text-sm tracking-wide transition duration-300
-                      ${
-                        isActive
-                          ? "text-white"
-                          : "text-gray-400"
-                      }
-                      group-hover:text-white
-                    `}
-                  >
-                    {item.label}
-                  </span>
-                </a>
-              );
-            })}
+          {/* Center — Nav Links */}
+          <div className="nb-center">
+            {sections.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className={`nb-link${active === s.id ? " active" : ""}`}
+              >
+                {s.label}
+              </a>
+            ))}
           </div>
+
+          {/* Right — Time + Command */}
+          <div className="nb-right">
+            <span className="nb-time">{time}</span>
+            <button
+              className="nb-cmd"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-cmdk"))}
+            >
+              ⌘K
+            </button>
+          </div>
+
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
+

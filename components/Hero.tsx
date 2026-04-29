@@ -1,210 +1,230 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useScroll,
-} from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import MagneticButton from "./MagneticButton";
-import { Github, Linkedin, Download, Mail } from "lucide-react";
+
+interface Dot {
+  ox: number;
+  oy: number;
+  x: number;
+  y: number;
+}
 
 export default function Hero() {
-  const name = "Rajshekar RC";
+  const [animReady, setAnimReady] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const mouseRef = useRef<{ x: number; y: number }>({ x: -9999, y: -9999 });
+  const rafRef = useRef<number>(0);
 
-  const roles = [
-    "Full Stack Developer",
-    "Frontend Engineer",
-    "Backend Engineer",
-    "React & Next.js Specialist",
-    "Software Engineer",
-  ];
-
-  const [currentRole, setCurrentRole] = useState(0);
-
-  /* ---------------- Role Switch ---------------- */
+  // Short delay lets React finish mounting + canvas init before entrance animations fire
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 2500);
-    return () => clearInterval(interval);
+    const t = setTimeout(() => setAnimReady(true), 200);
+    return () => clearTimeout(t);
   }, []);
 
-  /* ---------------- Scroll Exit Animation ---------------- */
-  const { scrollY } = useScroll();
-  const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  /* ---------------- Mouse Depth ---------------- */
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const smoothX = useSpring(mouseX, { stiffness: 40, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-
-  const rotateX = useTransform(smoothY, [-20, 20], [4, -4]);
-  const rotateY = useTransform(smoothX, [-20, 20], [-4, 4]);
-
+  // Animated mesh canvas
   useEffect(() => {
-    const handleMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      mouseX.set((e.clientX - innerWidth / 2) / 60);
-      mouseY.set((e.clientY - innerHeight / 2) / 60);
-    };
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, [mouseX, mouseY]);
+    const SPACING = 60;
+    let dots: Dot[] = [];
+    let t = 0;
+    function buildDots() {
+      if (!canvas) return;
+      dots = [];
+      const cols = Math.ceil(canvas.width / SPACING) + 1;
+      const rows = Math.ceil(canvas.height / SPACING) + 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          dots.push({ ox: c * SPACING, oy: r * SPACING, x: c * SPACING, y: r * SPACING });
+        }
+      }
+    }
+
+    function resize() {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth || window.innerWidth;
+      canvas.height = canvas.offsetHeight || window.innerHeight;
+      buildDots();
+    }
+
+    function draw() {
+      if (!canvas || !ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const { x: mx, y: my } = mouseRef.current;
+      t += 0.008;
+
+      for (const dot of dots) {
+        const waveX = Math.sin(dot.oy * 0.02 + t) * 4;
+        const waveY = Math.cos(dot.ox * 0.02 + t * 1.3) * 4;
+
+        const dx = dot.ox + waveX - mx;
+        const dy = dot.oy + waveY - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 220 && dist > 0) {
+          const force = (1 - dist / 220) * 30;
+          dot.x = dot.ox + waveX + (dx / dist) * force;
+          dot.y = dot.oy + waveY + (dy / dist) * force;
+        } else {
+          dot.x += (dot.ox + waveX - dot.x) * 0.08;
+          dot.y += (dot.oy + waveY - dot.y) * 0.08;
+        }
+
+        const drawDist = Math.sqrt((dot.x - mx) ** 2 + (dot.y - my) ** 2);
+        const alpha = Math.max(0.05, Math.min(0.4, 0.4 - (drawDist / 400) * 0.35));
+
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 1.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(240, 238, 232, ${alpha})`;
+        ctx.fill();
+      }
+
+      rafRef.current = requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+
+    const hero = heroRef.current;
+
+    function onMouseMove(e: MouseEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function onMouseLeave() {
+      mouseRef.current = { x: -9999, y: -9999 };
+    }
+
+    function onResize() {
+      resize();
+    }
+
+    hero?.addEventListener("mousemove", onMouseMove);
+    hero?.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      hero?.removeEventListener("mousemove", onMouseMove);
+      hero?.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  // Mouse-following glow
+  useEffect(() => {
+    const hero = heroRef.current;
+    const glow = glowRef.current;
+    if (!hero || !glow) return;
+
+    function onMouseMove(e: MouseEvent) {
+      const rect = hero!.getBoundingClientRect();
+      glow!.style.setProperty("--mx", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+      glow!.style.setProperty("--my", `${((e.clientY - rect.top) / rect.height) * 100}%`);
+    }
+
+    hero.addEventListener("mousemove", onMouseMove);
+    return () => hero.removeEventListener("mousemove", onMouseMove);
+  }, []);
 
   return (
-    <motion.section
-      id="home"
-      style={{ scale, opacity }}
-      className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden"
-    >
-      {/* Background */}
-      <div className="absolute inset-0 -z-40 bg-gradient-to-br from-black via-neutral-950 to-black" />
+    <section id="home" className={`hero${animReady ? " hero-anim" : ""}`} ref={heroRef}>
 
-      {/* Ambient Glow */}
-      <motion.div
-        style={{ x: smoothX, y: smoothY }}
-        animate={{ opacity: [0.5, 0.7, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-[900px] h-[900px] bg-blue-600/5 blur-[200px] rounded-full -z-30 pointer-events-none"
-      />
+      {/* Layer 1 — Animated mesh canvas */}
+      <canvas ref={canvasRef} className="hero-canvas" />
+
+      {/* Layer 2 — Grain overlay */}
+      <div className="hero-grain" />
+
+      {/* Layer 3 — Mouse-following glow */}
+      <div className="hero-glow" ref={glowRef} />
+
+      {/* Layer 4 — Floating geometric shapes */}
+      <div className="float-shape s1" />
+      <div className="float-shape s2" />
+      <div className="float-shape s3" />
 
       {/* Content */}
-      <motion.div
-        style={{ rotateX, rotateY }}
-        className="relative z-10 flex flex-col items-center"
-      >
-        {/* Name */}
-        <motion.h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white flex flex-wrap justify-center">
-          {name.split("").map((letter, index) => (
-            <motion.span
-              key={index}
-              initial={{ opacity: 0, y: 80 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: index * 0.04,
-                duration: 0.8,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="inline-block"
+      <div className="hero-content">
+
+        {/* Top meta row */}
+        <div className="hero-meta">
+          <div className="hero-meta-left">
+            <strong>Rajshekar RC</strong>
+            Engineer based in Bangalore, India.<br />
+            AI Engineer, Full Stack Developer, GenAI.
+          </div>
+          <div className="hero-meta-right">
+            <span className="status-pill">
+              <span className="status-dot" />
+              Available · 2026
+            </span>
+          </div>
+        </div>
+
+        {/* Massive headline */}
+        <h1 className="hero-title">
+          <div className="line">
+            <span>Engineer<em>,</em></span>
+          </div>
+          <div className="line">
+            <span>craftsman<em>.</em></span>
+          </div>
+        </h1>
+
+        {/* Bottom row */}
+        <div className="hero-bottom">
+
+          {/* Lead paragraph */}
+          <p className="hero-lead">
+            I build production-grade AI systems and full-stack web applications.{" "}
+            From RAG pipelines and LLM integrations to{" "}
+            <em>scalable backends and interfaces that feel considered.</em>
+          </p>
+
+          {/* Social icons */}
+          <div className="hero-socials">
+            <a
+              href="https://github.com/Rajshekar2003"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
             >
-              {letter === " " ? "\u00A0" : letter}
-            </motion.span>
-          ))}
-        </motion.h1>
+              <Github size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rajshekarrc"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a href="mailto:rajshekar.r.c2003@gmail.com" aria-label="Send email">
+              <Mail size={18} />
+            </a>
+            <a href="tel:+917483731783" aria-label="Call phone">
+              <Phone size={18} />
+            </a>
+          </div>
 
-        {/* Role */}
-        <motion.div
-          key={currentRole}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-6 text-xl md:text-2xl font-medium text-blue-400"
-        >
-          {roles[currentRole]}
-        </motion.div>
+          {/* Scroll indicator */}
+          <div className="hero-scroll">
+            <span>Scroll</span>
+            <div className="scroll-line" />
+          </div>
 
-        {/* Accent Line */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: "140px" }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="h-[2px] bg-blue-500 mt-6 rounded-full"
-        />
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-6 text-gray-400 max-w-2xl text-lg leading-relaxed"
-        >
-          Computer Science Engineer building scalable full-stack systems
-          with clean architecture, performance-driven design,
-          and modern user experiences.
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-12 flex gap-6 flex-wrap justify-center"
-        >
-          <a href="#contact">
-            <MagneticButton className="px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
-              Contact Me
-            </MagneticButton>
-          </a>
-
-          <a href="/Rajshekar_RC_Resume.pdf" download>
-            <MagneticButton className="flex items-center gap-2 px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
-              <Download size={18} />
-              Resume
-            </MagneticButton>
-          </a>
-
-          <a href="#projects">
-            <MagneticButton className="px-8 py-3 border border-blue-500/40 rounded-full font-medium text-blue-400 hover:bg-blue-600 hover:text-white transition">
-              View Work
-            </MagneticButton>
-          </a>
-        </motion.div>
-
-        {/* Social Links */}
-        <div className="mt-8 flex gap-6">
-          <a
-            href="https://github.com/Rajshekar2003"
-            target="_blank"
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition"
-          >
-            <Github size={18} />
-            GitHub
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/rajshekarrc"
-            target="_blank"
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition"
-          >
-            <Linkedin size={18} />
-            LinkedIn
-          </a>
-
-          {/* NEW EMAIL */}
-          <a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=rajshekar.r.c2003@gmail.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center gap-2 text-gray-400 hover:text-white transition"
->
-  <Mail size={18} />
-  Email
-</a>
         </div>
-      </motion.div>
-
-      {/* Scroll Mouse */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
-        className="absolute bottom-12 flex flex-col items-center"
-      >
-        <div className="w-6 h-10 border border-white/30 rounded-full flex justify-center relative">
-          <motion.div
-            animate={{ y: [2, 14, 2], opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
-            className="w-1.5 h-1.5 bg-white rounded-full mt-2"
-          />
-        </div>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

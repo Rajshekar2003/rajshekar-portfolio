@@ -1,43 +1,51 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function Preloader() {
-  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(0);
+  const [done, setDone] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1800); // duration of preloader
+    // Count from 0 → 99 over 1800ms
+    const totalSteps = 99;
+    const intervalMs = 1800 / totalSteps;
+    const countInterval = setInterval(() => {
+      setCount((prev) => {
+        if (prev >= totalSteps) {
+          clearInterval(countInterval);
+          return totalSteps;
+        }
+        return prev + 1;
+      });
+    }, intervalMs);
 
-    return () => clearTimeout(timer);
+    // Start fade at 1800ms
+    const fadeTimer = setTimeout(() => setDone(true), 1800);
+
+    // Unmount after fade completes (1800ms + 600ms)
+    const unmountTimer = setTimeout(() => setHidden(true), 2400);
+
+    return () => {
+      clearInterval(countInterval);
+      clearTimeout(fadeTimer);
+      clearTimeout(unmountTimer);
+    };
   }, []);
 
+  if (hidden) return null;
+
   return (
-    <AnimatePresence>
-      {loading && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="text-4xl md:text-6xl font-bold tracking-tight 
-                       bg-gradient-to-r from-white via-gray-300 to-white 
-                       bg-clip-text text-transparent"
-          >
-            Rajshekar RC
-          </motion.h1>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className={`preloader${done ? " done" : ""}`}>
+      <div className="preload-mark">
+        <span>R</span>
+        <span>C</span>
+      </div>
+      <div className="preload-bar" />
+      <div className="preload-count">
+        {String(count).padStart(2, "0")}
+      </div>
+    </div>
   );
 }

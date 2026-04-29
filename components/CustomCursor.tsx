@@ -1,47 +1,63 @@
-// "use client";
+"use client";
 
-// import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-// export default function CustomCursor() {
-//   const cursorRef = useRef<HTMLDivElement>(null);
-//   const [hovering, setHovering] = useState(false);
+export default function CustomCursor() {
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
-//   useEffect(() => {
-//     const moveCursor = (e: MouseEvent) => {
-//       if (!cursorRef.current) return;
+  useEffect(() => {
+    if (window.matchMedia("(hover: none)").matches) return;
 
-//       cursorRef.current.style.transform =
-//         `translate(${e.clientX - 8}px, ${e.clientY - 8}px)`;
-//     };
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
 
-//     const handleMouseOver = (e: MouseEvent) => {
-//       const target = e.target as HTMLElement;
-//       if (target.closest("a, button")) {
-//         setHovering(true);
-//       } else {
-//         setHovering(false);
-//       }
-//     };
+    let mx = -200, my = -200;
+    let rx = -200, ry = -200;
+    let rafId: number;
 
-//     window.addEventListener("mousemove", moveCursor);
-//     window.addEventListener("mouseover", handleMouseOver);
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+    };
 
-//     return () => {
-//       window.removeEventListener("mousemove", moveCursor);
-//       window.removeEventListener("mouseover", handleMouseOver);
-//     };
-//   }, []);
+    const tick = () => {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
 
-//   return (
-//     <div
-//       ref={cursorRef}
-//       className="fixed top-0 left-0 pointer-events-none z-[100] mix-blend-difference"
-//     >
-//       <div
-//         className={`rounded-full bg-white transition-all duration-200 ${
-//           hovering ? "w-10 h-10 opacity-40" : "w-4 h-4"
-//         }`}
-//       />
-//     </div>
-//   );
-// }
+    document.addEventListener("mousemove", onMove);
+    document.body.style.cursor = "none";
+
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as Element;
+      const viewEl = target.closest?.('[data-cursor="view"]');
+      const hoverEl = target.closest?.('[data-cursor="hover"]');
+      dot.classList.toggle("view", !!viewEl);
+      ring.classList.toggle("view", !!viewEl);
+      dot.classList.toggle("hover", !!hoverEl && !viewEl);
+      ring.classList.toggle("hover", !!hoverEl && !viewEl);
+    };
+
+    document.addEventListener("mouseover", onOver);
+
+    return () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseover", onOver);
+      cancelAnimationFrame(rafId);
+      document.body.style.cursor = "";
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
+    </>
+  );
+}

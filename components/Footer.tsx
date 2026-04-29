@@ -1,86 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { useEffect } from "react";
 
 export default function Footer() {
+  useEffect(() => {
+    function updateTime() {
+      const el = document.getElementById("time-footer");
+      if (!el) return;
+      const now = new Date();
+      const time = now.toLocaleTimeString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+      el.textContent = `${time} IST`;
+    }
+    updateTime();
+    const id = setInterval(updateTime, 30000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <footer className="relative mt-32">
+    <footer className="site-footer">
+      <div className="foot-big">
+        Rajshekar <em>RC.</em>
+      </div>
 
-      {/* Top Divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="foot-grid">
+        <div>
+          <strong>Based in</strong>
+          Bangalore, India<br />
+          <span id="time-footer">00:00 IST</span>
+        </div>
 
-      <div className="relative py-24 px-6">
+        <div>
+          <strong>Elsewhere</strong>
+          <a href="https://github.com/Rajshekar2003" target="_blank" rel="noopener noreferrer" data-cursor="hover">GitHub</a>
+          <a href="https://www.linkedin.com/in/rajshekarrc" target="_blank" rel="noopener noreferrer" data-cursor="hover">LinkedIn</a>
+          <a href="mailto:rajshekar.r.c2003@gmail.com" data-cursor="hover">Email</a>
+          <a href="tel:+917483731783" data-cursor="hover">Phone</a>
+        </div>
 
-        {/* Soft Background Panel */}
-        <div className="absolute inset-0 -z-10 bg-neutral-950/60 backdrop-blur-xl" />
+        <div>
+          <strong>Sections</strong>
+          <a href="#about" data-cursor="hover">About</a>
+          <a href="#projects" data-cursor="hover">Projects</a>
+          <a href="#experience" data-cursor="hover">Experience</a>
+          <a href="#certs" data-cursor="hover">Certifications</a>
+        </div>
 
-        <div className="max-w-6xl mx-auto text-center space-y-10">
-
-          {/* Brand */}
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-2xl font-semibold tracking-tight"
-          >
-            Rajshekar RC
-          </motion.h3>
-
-          {/* Social Icons */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="flex justify-center gap-8 text-xl"
-          >
-            <SocialIcon
-              href="https://github.com/Rajshekar2003"
-              icon={<FaGithub />}
-            />
-            <SocialIcon
-              href="https://www.linkedin.com/in/rajshekarrc"
-              icon={<FaLinkedin />}
-            />
-            <SocialIcon
-              href="https://www.instagram.com/mr.______.roy?igsh=a3U2YWRrbG13anpk&utm_source=qr"
-              icon={<FaInstagram />}
-            />
-          </motion.div>
-
-          {/* Bottom Line */}
-          <p className="text-sm text-gray-500 tracking-wide">
-            © {new Date().getFullYear()} Rajshekar RC.
-            <span className="text-gray-600"> Built with clean architecture.</span>
-          </p>
-
+        <div>
+          <strong>©</strong>
+          2026 Rajshekar RC<br />
+          All rights reserved
         </div>
       </div>
     </footer>
-  );
-}
-
-/* Reusable Social Icon */
-function SocialIcon({
-  href,
-  icon,
-}: {
-  href: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ scale: 1.15, y: -4 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="text-gray-400 hover:text-white transition duration-300"
-    >
-      {icon}
-    </motion.a>
   );
 }
