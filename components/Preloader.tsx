@@ -8,9 +8,9 @@ export default function Preloader() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    // Count from 0 → 99 over 1800ms
+    // Count from 0 → 99 over 1200ms
     const totalSteps = 99;
-    const intervalMs = 1800 / totalSteps;
+    const intervalMs = 1200 / totalSteps;
     const countInterval = setInterval(() => {
       setCount((prev) => {
         if (prev >= totalSteps) {
@@ -21,11 +21,11 @@ export default function Preloader() {
       });
     }, intervalMs);
 
-    // Start fade at 1800ms
-    const fadeTimer = setTimeout(() => setDone(true), 1800);
+    // Start fade at 1200ms
+    const fadeTimer = setTimeout(() => setDone(true), 1200);
 
-    // Unmount after fade completes (1800ms + 600ms)
-    const unmountTimer = setTimeout(() => setHidden(true), 2400);
+    // Unmount after fade completes (1200ms + 400ms)
+    const unmountTimer = setTimeout(() => setHidden(true), 1600);
 
     return () => {
       clearInterval(countInterval);

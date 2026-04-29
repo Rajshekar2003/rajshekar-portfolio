@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const STATS = [
   { num: 10,  plus: "+", label: "Projects Built" },
@@ -10,41 +10,28 @@ const STATS = [
 ];
 
 function StatItem({ num, plus, label }: { num: number; plus: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState(0);
-  const animated = useRef(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated.current) {
-          animated.current = true;
-          const startTime = performance.now();
-          const duration = 1400;
-
-          const tick = (now: number) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.floor(easeOut * num));
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
+    const startTime = performance.now() + 200;
+    const duration = 1400;
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      if (elapsed < 0) {
+        requestAnimationFrame(tick);
+        return;
+      }
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOut * num));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    const raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [num]);
 
   return (
-    <div className="stat" ref={ref}>
+    <div className="stat">
       <div className="stat-num">
         {count}
         <em className="plus">{plus}</em>

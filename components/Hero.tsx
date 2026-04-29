@@ -19,14 +19,16 @@ export default function Hero() {
   const mouseRef = useRef<{ x: number; y: number }>({ x: -9999, y: -9999 });
   const rafRef = useRef<number>(0);
 
-  // Short delay lets React finish mounting + canvas init before entrance animations fire
+  // Fire hero-anim after preloader finishes (1600ms) + small buffer
   useEffect(() => {
-    const t = setTimeout(() => setAnimReady(true), 200);
+    const t = setTimeout(() => setAnimReady(true), 1700);
     return () => clearTimeout(t);
   }, []);
 
   // Animated mesh canvas
   useEffect(() => {
+    if (window.matchMedia("(hover: none)").matches) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");

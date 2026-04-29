@@ -60,7 +60,18 @@ export default function About() {
     );
 
     paragraphs.forEach((p) => observer.observe(p));
-    return () => observer.disconnect();
+
+    const safetyTimeout = setTimeout(() => {
+      paragraphs.forEach((p) => {
+        p.querySelectorAll<HTMLElement>(".reveal-word").forEach((el) => el.classList.add("visible"));
+        observer.unobserve(p);
+      });
+    }, 3000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(safetyTimeout);
+    };
   }, []);
 
   // Portrait parallax — max ±8px, scale 1.04 on hover; inset:0 default keeps image centred

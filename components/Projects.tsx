@@ -132,6 +132,7 @@ function ProjectCard({ project }: { project: Project }) {
         className="project-img"
         style={{ objectFit: "cover" }}
         priority={project.priority}
+        sizes="(max-width: 900px) 85vw, 880px"
       />
       <div className="project-index">{project.index}</div>
     </div>
@@ -178,6 +179,7 @@ export default function Projects() {
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
+    if (window.matchMedia("(hover: none)").matches) return;
 
     let intervalId: ReturnType<typeof setInterval> | null = null;
     let idleTimerId: ReturnType<typeof setTimeout> | null = null;

@@ -59,6 +59,7 @@ export default function ResumeIQCaseStudy() {
           fill
           style={{ objectFit: "cover" }}
           priority
+          sizes="(max-width: 900px) 100vw, 980px"
         />
       </div>
 
