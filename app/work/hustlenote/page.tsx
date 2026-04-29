@@ -15,7 +15,7 @@ export default function HustleNotePage() {
       role="Sole Developer"
       year="2024"
       stack="Next.js · Node.js · MongoDB · Chart.js"
-      liveUrl="#"
+      liveUrl="https://hustlenote.vercel.app/"
       sourceUrl="https://github.com/Rajshekar2003"
       imageSrc="/img_p3.png"
       imageAlt="HustleNote"
