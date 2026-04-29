@@ -2502,3 +2502,33 @@ p {
 @media (max-width: 720px) {
   .not-found { padding: 100px 24px 80px; }
 }
+
+@media (max-width: 900px) {
+  /* Force all sections to be visible immediately on mobile */
+  [data-reveal],
+  .reveal-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Disable expensive animations on mobile */
+  .skill-pill {
+    animation: none !important;
+  }
+
+  .float-shape {
+    display: none !important;
+  }
+
+  /* Disable canvas just in case it slipped through */
+  .hero-canvas {
+    display: none !important;
+  }
+
+  /* Reduce blur effects (expensive on mobile GPU) */
+  .cmdk-backdrop {
+    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.92) !important;
+  }
+}

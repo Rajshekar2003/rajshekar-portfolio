@@ -27,7 +27,9 @@ export default function Hero() {
 
   // Animated mesh canvas
   useEffect(() => {
-    if (window.matchMedia("(hover: none)").matches) return;
+    if (typeof window !== "undefined" && window.innerWidth < 900) {
+      return;
+    }
 
     const canvas = canvasRef.current;
     if (!canvas) return;

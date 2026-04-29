@@ -6,7 +6,9 @@ import Lenis from "lenis";
 
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(hover: none)").matches) return;
+    if (typeof window !== "undefined" && window.innerWidth < 900) {
+      return;
+    }
 
     const lenis = new Lenis({
       duration: 1.2,
