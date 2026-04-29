@@ -2532,3 +2532,74 @@ p {
     background: rgba(0, 0, 0, 0.92) !important;
   }
 }
+
+@media (max-width: 900px) {
+  /* SKILLS / EXPERTISE — remove panel shadow and transitions on mobile */
+  .expertise-grid {
+    box-shadow: none !important;
+    border-radius: 12px !important;
+    background: var(--surface-1) !important;
+  }
+  .expertise-card {
+    transition: none !important;
+    padding: 32px 20px !important;
+  }
+  .expertise-card:hover {
+    background: transparent !important;
+    padding-left: 20px !important;
+  }
+  .expertise-card::before {
+    display: none !important;
+  }
+  .skill-pill {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* EDUCATION — remove panel shadow and transitions on mobile */
+  .education-list {
+    box-shadow: none !important;
+    border-radius: 12px !important;
+    background: var(--surface-1) !important;
+  }
+  .education-row {
+    transition: none !important;
+    padding: 32px 20px !important;
+  }
+  .education-row:hover {
+    background: transparent !important;
+    padding-left: 20px !important;
+  }
+  .education-row::before {
+    display: none !important;
+  }
+
+  /* EXPERIENCE — remove panel shadow and transitions on mobile */
+  .experience-list {
+    box-shadow: none !important;
+    border-radius: 12px !important;
+    background: var(--surface-1) !important;
+  }
+  .experience-row {
+    transition: none !important;
+    padding: 32px 20px !important;
+  }
+  .experience-row:hover {
+    background: transparent !important;
+    padding-left: 20px !important;
+  }
+  .experience-row::before {
+    display: none !important;
+  }
+
+  /* GENERAL — disable will-change and reduce GPU load */
+  * {
+    will-change: auto !important;
+  }
+
+  /* Remove backdrop-filter anywhere it's used */
+  [class*="backdrop"],
+  .cmdk-backdrop {
+    backdrop-filter: none !important;
+  }
+}
