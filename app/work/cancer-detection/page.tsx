@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CancerDetectionPage() {
   return (
     <ProjectPage
-      num="02 / 06"
+      num="03 / 07"
       title={<>Esophageal <em>Cancer Detection</em></>}
       subtitle="A final-year project exploring how quantum mechanics principles can strengthen medical image classification."
       role="Final Year Project · Sole Developer"

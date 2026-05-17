@@ -5,7 +5,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: base, lastModified: new Date(), changeFrequency: "monthly", priority: 1 },
     { url: `${base}/resume`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/work/resumeiq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/work/agentic-research-assistant`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${base}/work/resumeiq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/work/cancer-detection`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/work/hustlenote`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/work/campus-marketplace`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },

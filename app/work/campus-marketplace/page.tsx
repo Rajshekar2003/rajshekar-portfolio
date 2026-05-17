@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CampusMarketplacePage() {
   return (
     <ProjectPage
-      num="04 / 06"
+      num="05 / 07"
       title={<>Campus <em>Marketplace</em></>}
       subtitle="A student-to-student marketplace where textbooks, electronics, and campus essentials change hands without middlemen."
       role="Lead Frontend + Firebase Architecture"

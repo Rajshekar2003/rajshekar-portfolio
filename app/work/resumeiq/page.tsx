@@ -16,7 +16,7 @@ export default function ResumeIQCaseStudy() {
 
       {/* ── HERO ─────────────────────────────────────── */}
       <div className="case-hero">
-        <p className="case-kicker">Case Study · 01 / Project</p>
+        <p className="case-kicker">Case Study · 02 / 07</p>
 
         <h1 className="case-title">
           Resume<em>IQ</em>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function BirdSpeciesPage() {
   return (
     <ProjectPage
-      num="06 / 06"
+      num="07 / 07"
       title={<>Bird Species <em>Identification</em></>}
       subtitle="An end-to-end KNN classification pipeline achieving 90%+ accuracy on bird species data."
       role="Machine Learning Developer"
@@ -56,8 +56,8 @@ export default function BirdSpeciesPage() {
         "Tuned hyperparameters to maximize test accuracy",
         "Created visualizations for predictions and decision boundaries",
       ]}
-      nextSlug="resumeiq"
-      nextName={<>Resume<em>IQ</em></>}
+      nextSlug="agentic-research-assistant"
+      nextName={<>Agentic <em>Research Assistant</em></>}
     />
   );
 }

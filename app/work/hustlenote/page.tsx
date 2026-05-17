@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function HustleNotePage() {
   return (
     <ProjectPage
-      num="03 / 06"
+      num="04 / 07"
       title={<>Hustle<em>Note</em></>}
       subtitle="A habit tracker built for people who actually want to stick with their routines."
       role="Sole Developer"

@@ -25,9 +25,26 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    index: "01 / 06",
-    inner: "ResumeIQ · Dashboard",
+    index: "01 / 07",
+    inner: "Agentic Research · 5-Agent Pipeline",
     num: "01",
+    title: <>Agentic <em>Research Assistant</em></>,
+    description:
+      "A production multi-agent LangGraph pipeline that reduces hallucination by 46% over single-pass RAG. Five specialized agents (Planner, Searcher, FactChecker, Writer, Critic) coordinated via LangGraph, with Critic→Writer revision loops and Groq→Gemini provider failover. 35% F1 improvement on HotpotQA multi-hop questions.",
+    tags: "PYTHON · FASTAPI · LANGGRAPH · NEXT.JS · GROQ · TAVILY · PYTEST",
+    role: "Sole developer · 6-week build",
+    links: [
+      { label: "Live", href: "https://agentic-research-assistant-frontend.vercel.app" },
+      { label: "Source", href: "https://github.com/Rajshekar2003/agentic-research-assistant" },
+    ],
+    caseHref: "/work/agentic-research-assistant",
+    imageSrc: "/img_p7.png",
+    priority: true,
+  },
+  {
+    index: "02 / 07",
+    inner: "ResumeIQ · Dashboard",
+    num: "02",
     title: <>Resume<em>IQ</em></>,
     description:
       "Production-grade AI resume analyzer with 5 LLM-powered endpoints — ATS scoring, JD matching, keyword extraction, bullet rewriting, and a 2-stage RAG pipeline indexing 53 job descriptions via ChromaDB and Llama 3.3 70B on Groq. 25× latency gain, 1.25s avg response, 100% schema validity across eval tests.",
@@ -39,12 +56,11 @@ const PROJECTS: Project[] = [
     ],
     caseHref: "/work/resumeiq",
     imageSrc: "/img_p1.png",
-    priority: true,
   },
   {
-    index: "02 / 06",
+    index: "03 / 07",
     inner: "Cancer Detection · Quantum",
-    num: "02",
+    num: "03",
     title: <>Esophageal <em>Cancer Detection</em></>,
     description:
       "Final year project applying quantum mechanics principles to medical image classification — a hybrid approach combining quantum feature analysis with traditional ML to detect esophageal cancer from diagnostic imagery.",
@@ -55,9 +71,9 @@ const PROJECTS: Project[] = [
     imageSrc: "/img_p2.png",
   },
   {
-    index: "03 / 06",
+    index: "04 / 07",
     inner: "HustleNote · Dashboard",
-    num: "03",
+    num: "04",
     title: <>Hustle<em>Note</em></>,
     description:
       "Habit-tracking web application — daily habit creation, completion tracking, and weekly/monthly performance visualizations through interactive Chart.js graphs.",
@@ -71,9 +87,9 @@ const PROJECTS: Project[] = [
     imageSrc: "/img_p3.png",
   },
   {
-    index: "04 / 06",
+    index: "05 / 07",
     inner: "Campus · Listings",
-    num: "04",
+    num: "05",
     title: <>Campus <em>Marketplace</em></>,
     description:
       "Student-to-student marketplace platform with optimized frontend performance, real-time listings, and scalable Firebase backend integration.",
@@ -84,9 +100,9 @@ const PROJECTS: Project[] = [
     imageSrc: "/img_p4.png",
   },
   {
-    index: "05 / 06",
+    index: "06 / 07",
     inner: "Iris Tracker · Live Feed",
-    num: "05",
+    num: "06",
     title: <>Real-Time <em>Iris Detection</em></>,
     description:
       "Real-time iris localization and eye-tracking using MediaPipe and OpenCV with facial landmark extraction. Processes 30+ frames per second for smooth low-latency live-feed performance.",
@@ -100,9 +116,9 @@ const PROJECTS: Project[] = [
     imageSrc: "/img_p5.png",
   },
   {
-    index: "06 / 06",
+    index: "07 / 07",
     inner: "KNN Classifier · Output",
-    num: "06",
+    num: "07",
     title: <>Bird Species <em>Identification</em></>,
     description:
       "End-to-end KNN classification model identifying bird species from structured dataset features — preprocessing, cross-validation, accuracy evaluation, and prediction visualization. 90%+ classification accuracy.",
@@ -271,7 +287,7 @@ export default function Projects() {
       </div>
 
       <div className="work-footer">
-        <span>06 selected · scroll to explore</span>
+        <span>07 selected · scroll to explore</span>
         <div className="scroll-nav">
           <button
             data-cursor="hover"

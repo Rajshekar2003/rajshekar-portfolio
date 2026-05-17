@@ -39,7 +39,7 @@ export default function ResumePage() {
       <div className="resume-contact">
         <span>Bangalore, India</span>
         <span className="resume-contact-sep">·</span>
-        <a href="tel:+917483731783">+91 7483 731 783</a>
+        <a href="tel:+917483731783">+91-7483731783</a>
         <span className="resume-contact-sep">·</span>
         <a href="mailto:rajshekar.r.c2003@gmail.com">rajshekar.r.c2003@gmail.com</a>
         <span className="resume-contact-sep">·</span>
@@ -56,12 +56,11 @@ export default function ResumePage() {
       <section className="resume-section">
         <h2 className="resume-section-title">Summary</h2>
         <p className="resume-summary">
-          Full Stack Developer and AI Engineer with hands-on experience building
-          production-grade AI systems, scalable web applications, ML classification
-          pipelines, and real-time computer vision solutions. Proficient in{" "}
-          <em>React, Next.js, Python, Flask, and Express.js</em> with strong foundations
-          in LLM integration, RAG pipelines, REST API design, and ML model development.
-          Passionate about shipping real-world Generative AI products.
+          Full Stack Developer and AI Engineer who ships{" "}
+          <em>production AI systems end-to-end</em>. Built a 5-agent LangGraph research
+          pipeline (35% F1 over RAG baseline) and a production AI resume analyzer with 5
+          LLM endpoints. Strong in Python, FastAPI, React, Next.js, LLMs, RAG, and
+          multi-agent systems. Seeking AI Engineering, GenAI, and Full Stack roles.
         </p>
       </section>
 
@@ -69,26 +68,29 @@ export default function ResumePage() {
       <section className="resume-section">
         <h2 className="resume-section-title">Skills</h2>
         <div className="resume-skills">
-          <span className="k">Programming</span>
+          <span className="k">Programming Languages</span>
           <span className="v">Python · JavaScript · TypeScript · SQL · Java</span>
 
           <span className="k">Frontend</span>
           <span className="v">React · Next.js · Tailwind · HTML5 · CSS3</span>
 
           <span className="k">Backend</span>
-          <span className="v">Node.js · Express · Flask · REST APIs</span>
+          <span className="v">Node.js · Express · Flask · FastAPI · REST APIs</span>
 
           <span className="k">Databases</span>
-          <span className="v">MongoDB · MySQL · Firebase Firestore · ChromaDB</span>
+          <span className="v">MongoDB · MySQL · ChromaDB · Vector Databases</span>
 
           <span className="k">AI / ML</span>
-          <span className="v">LLMs · RAG · Groq · Pydantic · Pandas · NumPy · KNN · MediaPipe · OpenCV</span>
+          <span className="v">LLMs · RAG · LangGraph · LangChain · Multi-Agent Systems · Prompt Engineering · Embeddings · Groq · Gemini · OpenAI · Anthropic Claude · Pydantic · NumPy</span>
 
-          <span className="k">Tools</span>
+          <span className="k">Computer Vision</span>
+          <span className="v">MediaPipe · OpenCV · Real-Time Tracking</span>
+
+          <span className="k">Tools &amp; Platforms</span>
           <span className="v">Git · GitHub · Vercel · Render · Linux</span>
 
           <span className="k">Core Concepts</span>
-          <span className="v">DSA · OOP · System Design · Prompt Engineering · Authentication</span>
+          <span className="v">DSA · OOP · System Design · Eval-Driven Development · Authentication</span>
         </div>
       </section>
 
@@ -126,6 +128,27 @@ export default function ResumePage() {
       {/* ── PROJECTS ─────────────────────────────────── */}
       <section className="resume-section">
         <h2 className="resume-section-title">Projects</h2>
+
+        {/* Agentic Research Assistant */}
+        <div className="resume-entry">
+          <div className="resume-entry-header">
+            <h3>Agentic <em>Research Assistant</em></h3>
+            <span className="tech">Python · FastAPI · LangGraph · Next.js · Groq · Tavily · Pytest · Render · Vercel</span>
+          </div>
+          <p className="resume-entry-desc">Production multi-agent research system · Live Demo</p>
+          <ul className="resume-bullets">
+            <li>
+              Shipped a 5-agent LangGraph research system (Planner, Searcher, FactChecker, Writer, Critic)
+              with a Critic→Writer revision loop, deployed across Render (FastAPI) and Vercel (Next.js)
+              with Groq→Gemini failover and live health monitoring.
+            </li>
+            <li>
+              Delivered 35% F1 gain (0.055→0.074) over RAG baseline on HotpotQA, cut hallucination 41%→22%
+              via fact-checking, and trimmed multi-hop latency ~40% via parallel asyncio.gather search;
+              validated by a 134-test pytest suite (4s CI).
+            </li>
+          </ul>
+        </div>
 
         {/* ResumeIQ */}
         <div className="resume-entry">
@@ -184,21 +207,6 @@ export default function ResumePage() {
           </ul>
         </div>
 
-        {/* Bird Species Identification */}
-        <div className="resume-entry">
-          <div className="resume-entry-header">
-            <h3>Bird Species <em>Identification</em></h3>
-            <span className="tech">Python · KNN · Pandas · NumPy</span>
-          </div>
-          <p className="resume-entry-desc">End-to-end ML classification</p>
-          <ul className="resume-bullets">
-            <li>
-              Implemented an end-to-end KNN classification pipeline across 4 stages —
-              preprocessing, cross-validation, accuracy evaluation, and prediction
-              visualization — achieving 90%+ classification accuracy.
-            </li>
-          </ul>
-        </div>
       </section>
 
       {/* ── EDUCATION ────────────────────────────────── */}

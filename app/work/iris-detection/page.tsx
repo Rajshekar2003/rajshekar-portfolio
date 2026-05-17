@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function IrisDetectionPage() {
   return (
     <ProjectPage
-      num="05 / 06"
+      num="06 / 07"
       title={<>Real-Time <em>Iris Detection</em></>}
       subtitle="A real-time iris localization and eye-tracking system processing 30+ frames per second."
       role="Computer Vision Engineer"
